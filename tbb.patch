@@ -1,0 +1,46 @@
+diff --git a/CC/cmake/FindTBB.cmake b/CC/cmake/FindTBB.cmake
+index 0a1a5bb7..dcca8124 100644
+--- a/CC/cmake/FindTBB.cmake
++++ b/CC/cmake/FindTBB.cmake
+@@ -184,7 +184,7 @@ if(NOT TBB_FOUND)
+   ##################################
+ 
+   if(TBB_INCLUDE_DIRS)
+-    file(READ "${TBB_INCLUDE_DIRS}/tbb/tbb_stddef.h" _tbb_version_file)
++    file(READ "${TBB_INCLUDE_DIRS}/oneapi/tbb/version.h" _tbb_version_file)
+     string(REGEX REPLACE ".*#define TBB_VERSION_MAJOR ([0-9]+).*" "\\1"
+         TBB_VERSION_MAJOR "${_tbb_version_file}")
+     string(REGEX REPLACE ".*#define TBB_VERSION_MINOR ([0-9]+).*" "\\1"
+diff --git a/CC/include/ParallelSort.h b/CC/include/ParallelSort.h
+index 2e9251a4..b9fc2e0d 100644
+--- a/CC/include/ParallelSort.h
++++ b/CC/include/ParallelSort.h
+@@ -32,7 +32,7 @@
+ 
+ #elif USE_TBB
+ 
+-	#include <tbb/parallel_sort.h>
++	#include <oneapi/tbb/parallel_sort.h>
+ 
+ 	#define ParallelSort tbb::parallel_sort
+ 
+diff --git a/qCC/mainwindow.cpp b/qCC/mainwindow.cpp
+index 2280ee7c..3391d169 100644
+--- a/qCC/mainwindow.cpp
++++ b/qCC/mainwindow.cpp
+@@ -140,7 +140,7 @@
+ #endif
+ 
+ #ifdef USE_TBB
+-#include <tbb/tbb_stddef.h>
++#include <oneapi/tbb/version.h>
+ #endif
+ 
+ //Qt UI files
+@@ -11045,4 +11045,4 @@ void MainWindow::doActionComparePlanes()
+ 	//pop-up summary
+ 	QMessageBox::information(this, "Plane comparison", info.join("\n"));
+ 	forceConsoleDisplay();
+-}
+\ No newline at end of file
++}

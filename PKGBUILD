@@ -9,7 +9,7 @@ name=cloudcompare
 _fragment="#tag=v2.11.3"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=6
+pkgrel=5
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
@@ -23,17 +23,20 @@ source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragmen
         CloudCompare.desktop
         ccViewer.desktop
         pdal_230.patch
+        tbb.patch
         )
 sha256sums=('SKIP'
             'SKIP'
             '984e6186f6483534a52cb153b65dee016904eb9efdb89211c2c0042eea2417ff'
             '14096df9cf7aca3099d5df1585d1cf669544e9b10754dce3d2507100dd7034fe'
             '821ac2540e1196774e26f8033946ce7b36223dae7a2a7c78f4a901b4177f68cc'
-            '70e5c6e932c1cf61dc9add064c2e165737db26a5fdda696c2e9cf92cbfd257c6')
+            '70e5c6e932c1cf61dc9add064c2e165737db26a5fdda696c2e9cf92cbfd257c6'
+            'SKIP')
 
 prepare() {
   git -C "${srcdir}/${name}" submodule update --init --recursive
   git -C "${srcdir}/${name}" apply -v "${srcdir}"/{constexpr,pdal_230}.patch
+  git -C "${srcdir}/${name}" apply -v "${srcdir}"/tbb.patch
   #fix gcc:11 porting
   sed '1 i\#include <limits>' -i "${srcdir}/${name}"/plugins/core/IO/qE57IO/extern/libE57Format/src/E57XmlParser.cpp
   #fix pcl
@@ -51,7 +54,7 @@ build() {
         -DCMAKE_INSTALL_LIBDIR=lib
         -DCMAKE_BUILD_TYPE=Release
         -DCOMPILE_CC_CORE_LIB_WITH_CGAL=ON
-        -DCOMPILE_CC_CORE_LIB_WITH_TBB=OFF
+        -DCOMPILE_CC_CORE_LIB_WITH_TBB=ON
         -DWITH_FFMPEG_SUPPORT:BOOL=ON
         -DFFMPEG_INCLUDE_DIR:PATH=/usr/include
         -DFFMPEG_LIBRARY_DIR:PATH=/usr/lib
@@ -114,7 +117,7 @@ package() {
   for size in 16 32 64 256; do
     install -D -m 644 ${name}/qCC/images/icon/cc_icon_${size}.png "${pkgdir}"/usr/share/icons/hicolor/${size}x${size}/apps/cc_icon.png
     install -D -m 644 ${name}/qCC/images/icon/cc_viewer_icon_${size}.png "${pkgdir}"/usr/share/icons/hicolor/${size}x${size}/apps/cc_viewer_icon.png
-  done 
+  done
   install -D -m 644 ${name}/qCC/images/icon/cc_icon.svg "${pkgdir}"/usr/share/icons/hicolor/scalable/apps/cc_icon.svg
   install -D -m 644 ${name}/qCC/images/icon/cc_viewer_icon.svg "${pkgdir}"/usr/share/icons/hicolor/scalable/apps/cc_viewer_icon.svg
 }
