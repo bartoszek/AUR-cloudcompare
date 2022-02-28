@@ -74,7 +74,7 @@ build() {
         -DPLUGIN_IO_QPDAL:BOOL=ON
         -DPLUGIN_IO_QPHOTOSCAN:BOOL=ON
         -DPLUGIN_IO_QRDB:BOOL=OFF # requires rdblib (package for AUR from http://www.riegl.com/products/software-packages/rdblib/)
-        -DPLUGIN_STANDARD_QANIMATION:BOOL=ON
+        -DPLUGIN_STANDARD_QANIMATION:BOOL=OFF
         -DPLUGIN_STANDARD_QBROOM:BOOL=ON
         -DPLUGIN_STANDARD_QCANUPO:BOOL=ON # requires dlib
         -DDLIB_ROOT:PATH="/usr" # required by qcanupo plugin
