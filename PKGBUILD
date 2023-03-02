@@ -9,7 +9,7 @@ name=cloudcompare
 _fragment="#tag=v2.12.4"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
@@ -135,13 +135,13 @@ prepare_submodule() {
   git -C "$srcdir/cloudcompare" submodule update --init
 }
 source+=(
-  "libE57Format::git+https://github.com/asmaloney/libE57Format"
-  "CCCoreLib::git+https://github.com/CloudCompare/CCCoreLib"
-  "PoissonRecon::git+https://github.com/cloudcompare/PoissonRecon"
-  "mplane-plugin::git+https://github.com/hvs-ait/mplane-plugin"
-  "ptrans::git+https://gitlab.univ-nantes.fr/E164955Z/ptrans"
-  "masonry-cc::git+https://github.com/CyberbuildLab/masonry-cc"
-  "JSonRPCPlugin::git+https://gitlab.com/theadib/JSonRPCPlugin"
-  "dlib::git+https://github.com/davisking/dlib"
+  "libE57Format::git+https://github.com/asmaloney/libE57Format#commit=dd7d7d7"
+  "CCCoreLib::git+https://github.com/CloudCompare/CCCoreLib#commit=54ecc71"
+  "PoissonRecon::git+https://github.com/cloudcompare/PoissonRecon#commit=8683f6c"
+  "mplane-plugin::git+https://github.com/hvs-ait/mplane-plugin#commit=94e7bf2"
+  "ptrans::git+https://gitlab.univ-nantes.fr/E164955Z/ptrans#commit=f0f3079"
+  "masonry-cc::git+https://github.com/CyberbuildLab/masonry-cc#commit=8372386"
+  "JSonRPCPlugin::git+https://gitlab.com/theadib/JSonRPCPlugin#commit=32efc6e"
+  "dlib::git+https://github.com/davisking/dlib#commit=9117bd7"
 )
 # vim:set sw=2 ts=2 et:
