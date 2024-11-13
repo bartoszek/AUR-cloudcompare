@@ -6,10 +6,10 @@
 # shellcheck disable=SC2034,SC2154 # allow unused/uninitialized variables.
 
 name=cloudcompare
-_fragment="#tag=v2.13.1"
+_fragment="#tag=v2.13.2"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=2
+pkgrel=1
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
