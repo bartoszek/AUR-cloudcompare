@@ -3,13 +3,14 @@
 # Contributor : Johannes Sauer <joh.sauer(at)gmail(dot)com>
 # Contributor : Danilo Bargen <aur at dbrgn dot ch>
 # Contributor : Olaf Leidinger <oleid@mescharet.de>
+# Contributor : Sylvain Poulain <sylvain.poulain at giscan dot com>
 # shellcheck disable=SC2034,SC2154 # allow unused/uninitialized variables.
 
 name=cloudcompare
 _fragment="#tag=v2.13.2"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
@@ -25,7 +26,7 @@ source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragmen
         CloudCompare.desktop
         ccViewer.desktop
         vtk_jsoncpp.patch)
-sha256sums=('f395d53d994e78171d0967b5ffc39f168709b552e657c84df06ea57bef03aea9'
+sha256sums=('SKIP'
             'SKIP'
             '14096df9cf7aca3099d5df1585d1cf669544e9b10754dce3d2507100dd7034fe'
             '821ac2540e1196774e26f8033946ce7b36223dae7a2a7c78f4a901b4177f68cc'
@@ -117,7 +118,7 @@ build() {
         -DJsonCpp_LIBRARY=/usr/lib
   )
   msg2 "Build Cork lib"
-  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC"
+  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC" CXX="g++"
   msg2 "Build CloudCompare"
   cmake -B build -S "${srcdir}/${name}" -G Ninja "${CMAKE_FLAGS[@]}"
 # shellcheck disable=SC2086 # allow slitting for MAKEFLAGS carrying multiple flags.
