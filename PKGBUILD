@@ -15,11 +15,14 @@
 : "${ENABLE_PCL:=0}"
 ((ENABLE_PCL)) && { depends+=('pcl'); qPCL='ON'; } || qPCL='OFF'
 
+_backports=(
+  8e1c0562a7c19fd26ccd0c23bb05fb7c36980e0c
+)
 name=cloudcompare
 _fragment="#tag=v2.13.2"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=3
+pkgrel=4
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="https://www.cloudcompare.org"
@@ -57,8 +60,10 @@ sha256sums=('SKIP'
 
 prepare() {
   prepare_submodule
+  git -C "$srcdir/cloudcompare" cherry-pick --no-commit -Xtheirs "${_backports[@]}" || git -C "$srcdir/cloudcompare" cherry-pick --abort
   ((ENABLE_PCL)) && git -C "${srcdir}"/cloudcompare apply -v "${srcdir}"/vtk_jsoncpp.patch || true
 # sed "/CXX_STANDARD/s/14/17/" -i "${srcdir}/${name}"/cmake/CMakeSetCompilerOptions.cmake
+ sed "/target_include_directories/a target_compile_definitions(LASzip::LASzip INTERFACE LASZIP_API_VERSION)" -i "$(find "${srcdir}/${name}" -name FindLASzip.cmake)"
 }
 
 build() {
